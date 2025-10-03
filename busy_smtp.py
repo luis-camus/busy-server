@@ -11,7 +11,8 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s [busy-smtp] %(message)s",
 )
 log = logging.getLogger("busy-smtp")
-
+host_ip="192.168.1.18"
+port="25"
 OUTLOOK_451 = (
     "451 4.7.500 Server busy. Please try again later from [2.56.250.16]. (S77714) "
     "[DB1PEPF000509EF.eurprd03.prod.outlook.com 2025-09-06T02:41:15.886Z 08DDE524AD2CBD69]"
@@ -40,7 +41,7 @@ class BrandedController(Controller):
         # Pass ident (banner) and the hostname used in 250- lines
         return SMTP(self.handler, hostname=self._helo_host, ident=self._ident)
 
-def start_busy_smtp(bind_ip="127.0.0.1", port=2526, helo_host="busy.mx.local"):
+def start_busy_smtp(bind_ip=host_ip, port=port, helo_host="busy.mx.local"):
     ctrl = BrandedController(BusyHandler(), bind_ip, port, helo_host)
     ctrl.start()
     log.info("Started on %s:%s banner=%s", bind_ip, port, helo_host)
@@ -48,8 +49,8 @@ def start_busy_smtp(bind_ip="127.0.0.1", port=2526, helo_host="busy.mx.local"):
 
 if __name__ == "__main__":
     ctrl = start_busy_smtp(
-        bind_ip=os.getenv("BIND_IP", "127.0.0.1"),
-        port=int(os.getenv("PORT", "25")),
+        bind_ip=os.getenv("BIND_IP", host_ip),
+        port=int(os.getenv("PORT", port)),
         helo_host=os.getenv("BANNER_HOST", "busy.mx.local"),
     )
     try:

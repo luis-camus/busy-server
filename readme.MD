@@ -23,7 +23,7 @@ deactivate
 
 # SWAKS Test
 
-swaks -s 127.0.0.1:2526 \
+swaks -s 127.0.0.1:25 \
   -f sender@codeffee.com \
   -t rcpt@any.test \
   --ehlo test \
