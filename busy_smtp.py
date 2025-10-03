@@ -49,7 +49,7 @@ def start_busy_smtp(bind_ip="127.0.0.1", port=2526, helo_host="busy.mx.local"):
 if __name__ == "__main__":
     ctrl = start_busy_smtp(
         bind_ip=os.getenv("BIND_IP", "127.0.0.1"),
-        port=int(os.getenv("PORT", "2526")),
+        port=int(os.getenv("PORT", "25")),
         helo_host=os.getenv("BANNER_HOST", "busy.mx.local"),
     )
     try:
